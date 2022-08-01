@@ -1,0 +1,15 @@
+name: Skip Stale Action
+description: Succeeds if the current branch is up to date with the main branch, fails otherwise
+inputs:
+  primary-branch:
+    description: Which branch to compare with
+    required: true
+    default: main
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        git fetch --all
+        git merge-base --is-ancestor origin/${{ inputs.primary-branch }} HEAD
+
